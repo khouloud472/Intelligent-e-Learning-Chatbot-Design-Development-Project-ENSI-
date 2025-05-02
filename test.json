@@ -1,0 +1,474 @@
+{
+  "title": "Deep Learning Interview Questions Evaluation Set",
+  "metadata": {
+      "created": "2023-11-15",
+      "version": "2.0",
+      "author": "AI Research Team",
+      "source": "Original FAQ dataset"
+  },
+  "description": "Complete evaluation set for FAQ retrieval system with all 44 questions",
+  "details": [
+      {
+          "id": "Q1",
+          "question": "Differentiate between AI, Machine Learning and Deep Learning.",
+          "expected": [
+              "Artificial Intelligence is a technique which enables machines to mimic human behavior",
+              "Machine Learning is a subset of AI technique which uses statistical methods",
+              "Deep learning is a subset of ML which make the computation of multi-layer neural network feasible"
+          ],
+          "category": "Fundamentals"
+      },
+      {
+          "id": "Q2",
+          "question": "Do you think Deep Learning is Better than Machine Learning? If so, why?",
+          "expected": [
+              "Better for high dimensional data",
+              "Handles large number of inputs and outputs better",
+              "Automatically finds relevant features"
+          ],
+          "category": "Fundamentals"
+      },
+      {
+          "id": "Q3",
+          "question": "What is Perceptron? And How does it Work?",
+          "expected": [
+              "Linear model for binary classification",
+              "Models a neuron with weighted inputs",
+              "Computes function on weighted inputs"
+          ],
+          "category": "Neural Networks"
+      },
+      {
+          "id": "Q4",
+          "question": "What is the role of weights and bias?",
+          "expected": [
+              "Weights determine slope of classifier line",
+              "Bias shifts the line left or right",
+              "Bias treated as weighted input with x0=1"
+          ],
+          "category": "Neural Networks"
+      },
+      {
+          "id": "Q5",
+          "question": "What are the activation functions?",
+          "expected": [
+              "Introduces non-linearity",
+              "Examples: Sigmoid, Tanh, ReLU, Softmax",
+              "Decides whether neuron should be activated"
+          ],
+          "category": "Neural Networks"
+      },
+      {
+          "id": "Q6",
+          "question": "Explain Learning of a Perceptron.",
+          "expected": [
+              "Initialize weights and threshold",
+              "Provide input and calculate output",
+              "Update weights iteratively"
+          ],
+          "category": "Neural Networks"
+      },
+      {
+          "id": "Q7",
+          "question": "What is the significance of a Cost/Loss function?",
+          "expected": [
+              "Measures network accuracy",
+              "Provides performance metric",
+              "Goal is to minimize cost function"
+          ],
+          "category": "Training"
+      },
+      {
+          "id": "Q8",
+          "question": "What is gradient descent?",
+          "expected": [
+              "Optimization algorithm",
+              "Types: Stochastic, Batch, Mini-batch",
+              "Moves in direction of steepest descent"
+          ],
+          "category": "Training"
+      },
+      {
+          "id": "Q9",
+          "question": "What are the benefits of mini-batch gradient descent?",
+          "expected": [
+              "More efficient than stochastic",
+              "Helps avoid local minima",
+              "Approximates gradient of entire dataset"
+          ],
+          "category": "Training"
+      },
+      {
+          "id": "Q10",
+          "question": "What are the steps for using a gradient descent algorithm?",
+          "expected": [
+              "Initialize random weight and bias",
+              "Calculate error between actual and predicted",
+              "Update weights to reduce error"
+          ],
+          "category": "Training"
+      },
+      {
+          "id": "Q11",
+          "question": "Create a Gradient Descent in python.",
+          "expected": [
+              "Uses weight updates",
+              "Implements learning rate",
+              "Shows parameter updates"
+          ],
+          "category": "Implementation"
+      },
+      {
+          "id": "Q12",
+          "question": "What are the shortcomings of a single layer perceptron?",
+          "expected": [
+              "Cannot classify non-linearly separable data",
+              "Limited for complex problems"
+          ],
+          "category": "Neural Networks"
+      },
+      {
+          "id": "Q13",
+          "question": "What is a Multi-Layer-Perceptron?",
+          "expected": [
+              "Deep artificial neural network",
+              "Composed of multiple perceptrons",
+              "Has input, hidden and output layers"
+          ],
+          "category": "Neural Networks"
+      },
+      {
+          "id": "Q14",
+          "question": "What are the different parts of a multi-layer perceptron?",
+          "expected": [
+              "Input nodes pass information",
+              "Hidden nodes perform computations",
+              "Output nodes produce final result"
+          ],
+          "category": "Neural Networks"
+      },
+      {
+          "id": "Q15",
+          "question": "What Is Data Normalization And Why Do We Need It?",
+          "expected": [
+              "Rescales values to specific range",
+              "Subtracts mean and divides by std",
+              "Ensures better convergence"
+          ],
+          "category": "Preprocessing"
+      },
+      {
+          "id": "Q16",
+          "question": "Which is Better Deep Networks or Shallow ones? and Why?",
+          "expected": [
+              "Deep networks work with more features",
+              "More precise results",
+              "Better computational efficiency"
+          ],
+          "category": "Architecture"
+      },
+      {
+          "id": "Q17",
+          "question": "Why is Weight Initialization important in Neural Networks?",
+          "expected": [
+              "Affects learning capability",
+              "Good initialization enables quicker convergence",
+              "Weights should be close to zero but not too small"
+          ],
+          "category": "Training"
+      },
+      {
+          "id": "Q18",
+          "question": "What's the difference between a feed-forward and a backpropagation neural network?",
+          "expected": [
+              "Feed-forward has no cycles",
+              "Backpropagation includes training algorithm",
+              "Forward-prop is part of backpropagation"
+          ],
+          "category": "Neural Networks"
+      },
+      {
+          "id": "Q19",
+          "question": "What are the Hyperparameters? Name a few used in any Neural Network.",
+          "expected": [
+              "Determine network structure and training",
+              "Examples: learning rate, batch size",
+              "Number of hidden layers, activation functions"
+          ],
+          "category": "Training"
+      },
+      {
+          "id": "Q20",
+          "question": "Explain the different Hyperparameters related to Network and Training.",
+          "expected": [
+              "Network: hidden layers, activation functions",
+              "Training: learning rate, momentum",
+              "Epochs, batch size"
+          ],
+          "category": "Training"
+      },
+      {
+          "id": "Q21",
+          "question": "What is Dropout?",
+          "expected": [
+              "Regularization technique",
+              "Randomly drops units during training",
+              "Typically 20%-50% dropout rate"
+          ],
+          "category": "Regularization"
+      },
+      {
+          "id": "Q22",
+          "question": "In training a neural network, you notice that the loss does not decrease in the few starting epochs. What could be the reason?",
+          "expected": [
+              "Learning rate too low",
+              "Regularization parameter too high",
+              "Stuck at local minima"
+          ],
+          "category": "Training Issues"
+      },
+      {
+          "id": "Q23",
+          "question": "Name a few deep learning frameworks",
+          "expected": [
+              "TensorFlow",
+              "PyTorch",
+              "Keras",
+              "MXNet"
+          ],
+          "category": "Frameworks"
+      },
+      {
+          "id": "Q24",
+          "question": "What are Tensors?",
+          "expected": [
+              "Multidimensional arrays",
+              "Represent high-dimensional data",
+              "Fundamental in deep learning"
+          ],
+          "category": "Fundamentals"
+      },
+      {
+          "id": "Q25",
+          "question": "List a few advantages of TensorFlow?",
+          "expected": [
+              "Platform flexibility",
+              "CPU/GPU training",
+              "Auto differentiation",
+              "Open source"
+          ],
+          "category": "Frameworks"
+      },
+      {
+          "id": "Q26",
+          "question": "What is Computational Graph?",
+          "expected": [
+              "Series of TensorFlow operations",
+              "Nodes represent operations",
+              "Enables parallel computation"
+          ],
+          "category": "Frameworks"
+      },
+      {
+          "id": "Q27",
+          "question": "What is a CNN?",
+          "expected": [
+              "Class of deep neural networks",
+              "For visual imagery",
+              "Uses multi-channeled input"
+          ],
+          "category": "CNNs"
+      },
+      {
+          "id": "Q28",
+          "question": "Explain the different Layers of CNN.",
+          "expected": [
+              "Convolutional layer with filters",
+              "ReLu layer for non-linearity",
+              "Pooling reduces dimensions",
+              "Fully connected output layer"
+          ],
+          "category": "CNNs"
+      },
+      {
+          "id": "Q29",
+          "question": "What is an RNN?",
+          "expected": [
+              "For sequence data",
+              "Has internal memory",
+              "Precise temporal predictions"
+          ],
+          "category": "RNNs"
+      },
+      {
+          "id": "Q30",
+          "question": "What are some issues faced while training an RNN?",
+          "expected": [
+              "Vanishing Gradient",
+              "Exploding Gradient"
+          ],
+          "category": "RNNs"
+      },
+      {
+          "id": "Q31",
+          "question": "What is Vanishing Gradient? And how is this harmful?",
+          "expected": [
+              "Gradients get smaller during backprop",
+              "Earlier layers learn slowly",
+              "Reduces prediction accuracy"
+          ],
+          "category": "Training Issues"
+      },
+      {
+          "id": "Q32",
+          "question": "What is Exploding Gradient Descent?",
+          "expected": [
+              "Large error gradients accumulate",
+              "Causes unstable network",
+              "Poor prediction results"
+          ],
+          "category": "Training Issues"
+      },
+      {
+          "id": "Q33",
+          "question": "Explain the importance of LSTM.",
+          "expected": [
+              "Solves vanishing gradient",
+              "Learns long-term dependencies",
+              "Has feedback connections"
+          ],
+          "category": "RNNs"
+      },
+      {
+          "id": "Q34",
+          "question": "What are capsules in Capsule Neural Network?",
+          "expected": [
+              "Vector specifying object features",
+              "Contains instantiation parameters",
+              "Forms network layers"
+          ],
+          "category": "Advanced Architectures"
+      },
+      {
+          "id": "Q35",
+          "question": "Explain Autoencoders and it's uses.",
+          "expected": [
+              "Unsupervised learning",
+              "Reduces input size",
+              "Reconstructs data from compressed form"
+          ],
+          "category": "Specialized Networks"
+      },
+      {
+          "id": "Q36",
+          "question": "In terms of Dimensionality Reduction, How does Autoencoder differ from PCAs?",
+          "expected": [
+              "Learns non-linear transformations",
+              "Can use convolutional layers",
+              "More efficient for layered representations"
+          ],
+          "category": "Dimensionality Reduction"
+      },
+      {
+          "id": "Q37",
+          "question": "Give some real-life examples where autoencoders can be applied.",
+          "expected": [
+              "Image coloring",
+              "Feature extraction",
+              "Denoising images"
+          ],
+          "category": "Applications"
+      },
+      {
+          "id": "Q38",
+          "question": "what are the different layers of Autoencoders?",
+          "expected": [
+              "Encoder",
+              "Code",
+              "Decoder"
+          ],
+          "category": "Specialized Networks"
+      },
+      {
+          "id": "Q39",
+          "question": "Explain the architecture of an Autoencoder.",
+          "expected": [
+              "Encoder compresses input",
+              "Code represents compressed input", 
+              "Decoder reconstructs original"
+          ],
+          "category": "Specialized Networks"
+      },
+      {
+          "id": "Q40",
+          "question": "What is a Bottleneck in autoencoder and why is it used?",
+          "expected": [
+              "Layer between encoder and decoder",
+              "Decides relevant information",
+              "Balances compactness and relevance"
+          ],
+          "category": "Specialized Networks"
+      },
+      {
+          "id": "Q41",
+          "question": "Is there any variation of Autoencoders?",
+          "expected": [
+              "Convolution Autoencoders",
+              "Sparse Autoencoders",
+              "Deep Autoencoders"
+          ],
+          "category": "Specialized Networks"
+      },
+      {
+          "id": "Q42",
+          "question": "What are Deep Autoencoders?",
+          "expected": [
+              "Extension of simple Autoencoder",
+              "Learns higher-order features",
+              "Symmetrical deep-belief networks"
+          ],
+          "category": "Specialized Networks"
+      },
+      {
+          "id": "Q43",
+          "question": "What is a Restricted Boltzmann Machine?",
+          "expected": [
+              "Undirected graphical model",
+              "Used for dimensionality reduction",
+              "Feature learning"
+          ],
+          "category": "Specialized Networks"
+      },
+      {
+          "id": "Q44",
+          "question": "How Does RBM differ from Autoencoders?",
+          "expected": [
+              "RBM uses stochastic units",
+              "Autoencoder is deterministic",
+              "Different training objectives"
+          ],
+          "category": "Specialized Networks"
+      }
+  ],
+  "statistics": {
+      "total_questions": 44,
+      "categories": {
+          "Fundamentals": 4,
+          "Neural Networks": 9,
+          "Training": 7,
+          "Implementation": 1,
+          "Preprocessing": 1,
+          "Architecture": 1,
+          "Regularization": 1,
+          "Training Issues": 3,
+          "Frameworks": 3,
+          "CNNs": 2,
+          "RNNs": 3,
+          "Advanced Architectures": 1,
+          "Specialized Networks": 8,
+          "Dimensionality Reduction": 1,
+          "Applications": 1
+      },
+      "avg_expected_answers": 3.2
+  }
+}
