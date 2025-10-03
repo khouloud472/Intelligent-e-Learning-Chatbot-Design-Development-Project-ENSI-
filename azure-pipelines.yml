@@ -1,42 +1,18 @@
 # azure-pipelines.yml
-# CI pour le projet Intelligent-e-Learning-Chatbot-Design-Development-Project-ENSI
 trigger:
-- main  # branche principale
+- main
 
 pool:
-  vmImage: 'ubuntu-latest'
-
-variables:
-  pythonVersion: '3.11'  # version de Python à utiliser
+  vmImage: 'windows-latest'
 
 steps:
-# 1. Checkout du code
-- task: Checkout@1
-
-# 2. Installer Python
-- task: UsePythonVersion@0
+- task: Maven@3
   inputs:
-    versionSpec: '$(pythonVersion)'
-    addToPath: true
-
-# 3. Installer les dépendances
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Installer les dépendances'
-
-# 4. Lancer les tests unitaires si tu en as
-- script: |
-    if [ -f "tests/test_main.py" ]; then
-        python -m unittest discover -s tests
-    else
-        echo "Aucun test trouvé"
-    fi
-  displayName: 'Exécuter les tests'
-
-# 5. Optionnel : Publier les artefacts (par exemple le modèle ou les fichiers générés)
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: '$(Build.SourcesDirectory)/output'
-    artifactName: 'output'
-    publishLocation: 'Container'
+    mavenPomFile: 'pom.xml'          # Chemin vers ton pom.xml
+    mavenOptions: '-Xmx3072m'        # Mémoire maximale pour Maven
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '11'           # Version Java à utiliser
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'clean package'           # Nettoyer et créer le package
