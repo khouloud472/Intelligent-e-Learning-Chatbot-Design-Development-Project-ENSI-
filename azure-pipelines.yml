@@ -1,0 +1,42 @@
+# Maven build pipeline for Intelligent-e-Learning-Chatbot
+# Docs: https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- main  # se déclenche sur les commits de la branche main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  JAVA_HOME: '/usr/lib/jvm/java-11-openjdk-amd64' # chemin Java 11 sur Ubuntu
+
+steps:
+# Checkout code from GitHub
+- checkout: self
+  clean: true
+
+# Setup JDK 11
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+
+# Build and run tests with Maven
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'clean package'
+
+# Publish the packaged JAR/WAR as an artifact
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: 'target'
+    artifactName: 'drop'
+    publishLocation: 'Container'
