@@ -5,7 +5,7 @@ trigger:
       - main  # Branche qui déclenche le pipeline
 
 pool:
-  vmImage: 'Default'
+  name: 'Default'
 
 variables:
   pythonVersion: '3.11'
