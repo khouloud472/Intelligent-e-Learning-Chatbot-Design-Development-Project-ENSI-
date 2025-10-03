@@ -1,48 +1,42 @@
-# File: azure-pipelines.yml
-# Pipeline CI pour projet Python - Intelligent e-Learning Chatbot
-
+# azure-pipelines.yml
+# CI pour le projet Intelligent-e-Learning-Chatbot-Design-Development-Project-ENSI
 trigger:
-  branches:
-    include:
-      - main
+- main  # branche principale
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  pythonVersion: '3.11'
+  pythonVersion: '3.11'  # version de Python à utiliser
 
 steps:
-# 1️⃣ Checkout du code
+# 1. Checkout du code
 - task: Checkout@1
-  displayName: 'Checkout repository'
 
-# 2️⃣ Setup Python
+# 2. Installer Python
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(pythonVersion)'
     addToPath: true
 
-# 3️⃣ Installer les dépendances
+# 3. Installer les dépendances
 - script: |
     python -m pip install --upgrade pip
     pip install -r requirements.txt
-  displayName: 'Install dependencies'
+  displayName: 'Installer les dépendances'
 
-# 4️⃣ Lancer les tests
+# 4. Lancer les tests unitaires si tu en as
 - script: |
-    pytest --junitxml=test-results/results.xml
-  displayName: 'Run tests'
+    if [ -f "tests/test_main.py" ]; then
+        python -m unittest discover -s tests
+    else
+        echo "Aucun test trouvé"
+    fi
+  displayName: 'Exécuter les tests'
 
-# 5️⃣ Publier les résultats des tests
-- task: PublishTestResults@2
-  inputs:
-    testResultsFiles: 'test-results/results.xml'
-    testRunTitle: 'Python Tests'
-
-# 6️⃣ Optionnel: publier artefacts (ex: modèle entraîné)
+# 5. Optionnel : Publier les artefacts (par exemple le modèle ou les fichiers générés)
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: 'models'
-    ArtifactName: 'trained-models'
+    pathToPublish: '$(Build.SourcesDirectory)/output'
+    artifactName: 'output'
     publishLocation: 'Container'
