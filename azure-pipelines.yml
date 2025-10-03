@@ -1,22 +1,39 @@
+# azure-pipelines.yml
 trigger:
-- main
+  branches:
+    include:
+      - main  # Branche qui déclenche le pipeline
 
 pool:
-  name: Default  # Nom de ton agent auto-hébergé
+  vmImage: 'ubuntu-latest'
 
-steps:
-# Récupérer le code
-- checkout: self
-  fetchDepth: 1
+variables:
+  pythonVersion: '3.11'
 
-# Build Maven
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    goals: 'package'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+stages:
+  - stage: Build_and_Test
+    displayName: 'Build & Test Stage'
+    jobs:
+      - job: Install_and_Run
+        displayName: 'Install dependencies and run pipeline'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(pythonVersion)'
+              addToPath: true
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: 'Install dependencies'
+
+          - script: |
+              mkdir -p outputs
+              python main.py
+            displayName: 'Run main pipeline'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: 'outputs'
+              ArtifactName: 'pipeline_outputs'
+              publishLocation: 'Container'
