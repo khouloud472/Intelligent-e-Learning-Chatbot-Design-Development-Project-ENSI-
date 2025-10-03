@@ -2,10 +2,10 @@
 trigger:
   branches:
     include:
-      - main  # Branche qui déclenche le pipeline
+      - main
 
 pool:
-  name: 'Default'
+  name: 'Default'   # Assure-toi d’avoir installé un agent auto-hébergé dans ce pool
 
 variables:
   pythonVersion: '3.11'
@@ -17,21 +17,28 @@ stages:
       - job: Install_and_Run
         displayName: 'Install dependencies and run pipeline'
         steps:
-          - task: 6d15af64-176c-496d-b583-fd2ae21d4df4@1
-            inputs:
-              versionSpec: self
-              addToPath: 1
+          # Checkout du dépôt
+          - checkout: self
 
+          # Installer la version de Python
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(pythonVersion)'
+              addToPath: true
+
+          # Installer les dépendances
           - script: |
               python -m pip install --upgrade pip
               pip install -r requirements.txt
             displayName: 'Install dependencies'
 
+          # Lancer ton script
           - script: |
               mkdir -p outputs
               python main.py
             displayName: 'Run main pipeline'
 
+          # Publier les résultats
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: 'outputs'
