@@ -1,46 +1,62 @@
 # azure-pipelines.yml
-trigger:
-  branches:
+
+# ----------------------------
+# Déclenchement du pipeline
+# ----------------------------
+trigger:                 # Quand lancer automatiquement le pipeline
+  branches:              # Liste des branches surveillées
     include:
-      - main
+      - main             # Ici : chaque push sur "main" déclenche le pipeline
 
+# ----------------------------
+# Pool d’agents
+# ----------------------------
 pool:
-  name: 'Default'   # Assure-toi d’avoir installé un agent auto-hébergé dans ce pool
+  name: 'Default'        # Utilise un pool d'agents auto-hébergés nommé "Default"
+                         # Cela suppose que tu as installé un agent sur ta machine
+                         # Si tu veux un agent Microsoft : remplacer par vmImage: 'ubuntu-latest'
 
+# ----------------------------
+# Variables réutilisables
+# ----------------------------
 variables:
-  pythonVersion: '3.11'
+  pythonVersion: '3.11'  # Version de Python à utiliser pour exécuter ton projet
 
+# ----------------------------
+# Étapes du pipeline
+# ----------------------------
 stages:
-  - stage: Build_and_Test
-    displayName: 'Build & Test Stage'
+  - stage: Build_and_Test                # Nom logique du stage
+    displayName: 'Build & Test Stage'    # Nom lisible affiché dans Azure DevOps
     jobs:
-      - job: Install_and_Run
+      - job: Install_and_Run             # Définition d’un job (suite d’étapes à exécuter)
         displayName: 'Install dependencies and run pipeline'
-        steps:
-          # Checkout du dépôt
+        steps:                           # Liste des étapes de ce job
+
+          # Étape 1 : récupérer ton dépôt (code source)
           - checkout: self
 
-          # Installer la version de Python
+          # Étape 2 : configurer Python dans l'agent
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: '$(pythonVersion)'
-              addToPath: true
+              versionSpec: '$(pythonVersion)'  # Récupère la variable définie plus haut
+              addToPath: true                  # Ajoute Python au PATH système
 
-          # Installer les dépendances
+          # Étape 3 : installer les dépendances Python
           - script: |
-              python -m pip install --upgrade pip
-              pip install -r requirements.txt
+              python -m pip install --upgrade pip   # Met pip à jour
+              pip install -r requirements.txt       # Installe les dépendances de ton projet
             displayName: 'Install dependencies'
 
-          # Lancer ton script
+          # Étape 4 : exécuter ton script principal
           - script: |
-              mkdir -p outputs
-              python main.py
+              mkdir -p outputs          # Crée un dossier pour stocker les résultats
+              python main.py            # Exécute ton programme principal
             displayName: 'Run main pipeline'
 
-          # Publier les résultats
+          # Étape 5 : publier les résultats/artefacts
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: 'outputs'
-              ArtifactName: 'pipeline_outputs'
-              publishLocation: 'Container'
+              PathtoPublish: 'outputs'  # Dossier à publier (les fichiers générés)
+              ArtifactName: 'pipeline_outputs' # Nom affiché dans Azure DevOps
+              publishLocation: 'Container'     # Les artefacts seront stockés dans Azure
