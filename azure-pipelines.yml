@@ -1,18 +1,22 @@
-# azure-pipelines.yml
 trigger:
 - main
 
 pool:
-  vmImage: 'Default'
+  name: Default  # Nom de ton agent auto-hébergé
 
 steps:
+# Récupérer le code
+- checkout: self
+  fetchDepth: 1
+
+# Build Maven
 - task: Maven@3
   inputs:
-    mavenPomFile: 'pom.xml'          # Chemin vers ton pom.xml
-    mavenOptions: '-Xmx3072m'        # Mémoire maximale pour Maven
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '11'           # Version Java à utiliser
+    jdkVersionOption: '1.11'
     jdkArchitectureOption: 'x64'
+    goals: 'package'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean package'           # Nettoyer et créer le package
