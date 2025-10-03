@@ -1,42 +1,48 @@
-# Maven build pipeline for Intelligent-e-Learning-Chatbot
-# Docs: https://docs.microsoft.com/azure/devops/pipelines/languages/java
+# File: azure-pipelines.yml
+# Pipeline CI pour projet Python - Intelligent e-Learning Chatbot
 
 trigger:
-- main  # se déclenche sur les commits de la branche main
+  branches:
+    include:
+      - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 variables:
-  JAVA_HOME: '/usr/lib/jvm/java-11-openjdk-amd64' # chemin Java 11 sur Ubuntu
+  pythonVersion: '3.11'
 
 steps:
-# Checkout code from GitHub
-- checkout: self
-  clean: true
+# 1️⃣ Checkout du code
+- task: Checkout@1
+  displayName: 'Checkout repository'
 
-# Setup JDK 11
-- task: JavaToolInstaller@0
+# 2️⃣ Setup Python
+- task: UsePythonVersion@0
   inputs:
-    versionSpec: '11'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+    versionSpec: '$(pythonVersion)'
+    addToPath: true
 
-# Build and run tests with Maven
-- task: Maven@3
+# 3️⃣ Installer les dépendances
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+# 4️⃣ Lancer les tests
+- script: |
+    pytest --junitxml=test-results/results.xml
+  displayName: 'Run tests'
+
+# 5️⃣ Publier les résultats des tests
+- task: PublishTestResults@2
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean package'
+    testResultsFiles: 'test-results/results.xml'
+    testRunTitle: 'Python Tests'
 
-# Publish the packaged JAR/WAR as an artifact
+# 6️⃣ Optionnel: publier artefacts (ex: modèle entraîné)
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: 'target'
-    artifactName: 'drop'
+    PathtoPublish: 'models'
+    ArtifactName: 'trained-models'
     publishLocation: 'Container'
